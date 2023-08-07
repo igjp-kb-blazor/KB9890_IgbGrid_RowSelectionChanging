@@ -1,0 +1,78 @@
+﻿@inject PeopleDataService PeopleDS
+
+@if (People == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="my_wrapper">
+        <IgbGrid Data="People" PrimaryKey="@nameof(Person.ID)" AutoGenerate="false" Height="300px"
+                 RowSelection="GridSelectionMode.Multiple"
+                 RowSelectionChanging="OnRowSelectionChanging">
+            <IgbColumn Field="@nameof(Person.ID)" Header="ID" />
+            <IgbColumn Field="@nameof(Person.FamilyName)" Header="FamilyName" />
+            <IgbColumn Field="@nameof(Person.GivenName)" Header="GivenName" />
+            <IgbColumn Field="@nameof(Person.Prefecture)" Header="Prefecture" />
+            <IgbColumn Field="@nameof(Person.City)" Header="City" />
+        </IgbGrid>
+    </div>
+}
+
+<h5 style="margin-top: 24px;">
+    選択されたデータ
+</h5>
+
+@if (SelectedPeople?.Any() != true)
+{
+    <div>
+        <p>選択されていません</p>
+    </div>    
+}
+else
+{
+    <div class="my_wrapper">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>FamilyName</th>
+                    <th>GivenName</th>
+                    <th>Prefecture</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var person in SelectedPeople)
+                {
+                    <tr>
+                        <td>@person.ID</td>
+                        <td>@person.FamilyName</td>
+                        <td>@person.GivenName</td>
+                        <td>@person.Prefecture</td>
+                        <td>@person.City</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private IEnumerable<Person>? People = null;
+
+    private IEnumerable<Person>? SelectedPeople = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.People = await PeopleDS.GetPeopleAsync();
+    }
+
+    /// <summary>
+    /// IgbGrid 上で、行がクリックされるなどして選択状態が変化したときに呼び出されます。
+    /// </summary>
+    private void OnRowSelectionChanging(IgbRowSelectionEventArgs args)
+    {
+        this.SelectedPeople = args.Detail.NewSelection.Cast<Person>();
+    }
+}
