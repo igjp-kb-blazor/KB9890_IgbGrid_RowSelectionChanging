@@ -1,0 +1,17 @@
+/* /App.razor.rz.scp.css */
+.my_wrapper[b-lb0wjhpqrx] {
+    margin: 1em;
+}
+
+.table[b-lb0wjhpqrx] {
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+
+th[b-lb0wjhpqrx] {
+    background-color: lightgray;
+}
+
+th[b-lb0wjhpqrx], td[b-lb0wjhpqrx] {
+    border: 1px solid gray;
+}
