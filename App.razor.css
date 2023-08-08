@@ -1,1 +1,16 @@
-﻿
+﻿.my_wrapper {
+    margin: 1em;
+}
+
+.table {
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: lightgray;
+}
+
+th, td {
+    border: 1px solid gray;
+}
